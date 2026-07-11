@@ -1,6 +1,6 @@
 "use client";
 
-import { User, CheckCircle2, Zap } from 'lucide-react';
+import { User, CheckCircle2, Zap, ExternalLink } from 'lucide-react';
 
 interface SidebarProps {
   currentWeek: number;
@@ -188,6 +188,31 @@ export default function Sidebar({ currentWeek, onSelectWeek, completedWeeks }: S
             );
           })}
         </div>
+      </div>
+
+      {/* ── Showcase Link ── */}
+      <div className="px-4 pb-2">
+        <a
+          href="/code.html"
+          target="_blank"
+          rel="noreferrer"
+          className="flex items-center gap-2.5 w-full px-3.5 py-2.5 rounded-xl transition-all duration-200 group"
+          style={{ background: 'rgba(99,102,241,0.12)', border: '1px solid rgba(99,102,241,0.25)' }}
+          onMouseEnter={e => (e.currentTarget.style.background = 'rgba(99,102,241,0.22)')}
+          onMouseLeave={e => (e.currentTarget.style.background = 'rgba(99,102,241,0.12)')}
+        >
+          <div
+            className="w-6 h-6 rounded-lg flex items-center justify-center shrink-0"
+            style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)' }}
+          >
+            <ExternalLink size={11} className="text-white" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-xs font-semibold" style={{ color: '#a5b4fc' }}>Showcase Page</p>
+            <p className="text-[10px]" style={{ color: '#6366f1' }}>Student project example</p>
+          </div>
+          <ExternalLink size={10} style={{ color: '#6366f1' }} className="shrink-0 opacity-60 group-hover:opacity-100 transition-opacity" />
+        </a>
       </div>
 
       {/* ── Velocity Footer ── */}

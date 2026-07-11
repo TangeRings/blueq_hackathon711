@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Senior Workout Buddy | Capstone Showcase 2024</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&amp;family=Atkinson+Hyperlegible+Next:ital,wght@0,400..700;1,400..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary": "#ffffff",
+                    "on-tertiary-container": "#ffb55c",
+                    "surface": "#f7fafc",
+                    "secondary-fixed": "#eddcff",
+                    "outline": "#737780",
+                    "secondary-container": "#dbc1ff",
+                    "inverse-primary": "#a5c8ff",
+                    "on-secondary-fixed-variant": "#513c71",
+                    "secondary-fixed-dim": "#d5bbf9",
+                    "error-container": "#ffdad6",
+                    "background": "#f7fafc",
+                    "tertiary-fixed-dim": "#ffb866",
+                    "inverse-on-surface": "#eef1f3",
+                    "primary-fixed": "#d4e3ff",
+                    "error": "#ba1a1a",
+                    "inverse-surface": "#2d3133",
+                    "on-tertiary": "#ffffff",
+                    "primary-container": "#2c5282",
+                    "tertiary": "#553200",
+                    "on-tertiary-fixed": "#2b1700",
+                    "on-surface-variant": "#43474f",
+                    "on-primary-fixed-variant": "#204877",
+                    "surface-variant": "#e0e3e5",
+                    "surface-container": "#ebeef0",
+                    "on-tertiary-fixed-variant": "#673d00",
+                    "surface-dim": "#d7dadc",
+                    "on-background": "#181c1e",
+                    "on-secondary-fixed": "#250f43",
+                    "surface-container-high": "#e5e9eb",
+                    "on-error": "#ffffff",
+                    "surface-container-highest": "#e0e3e5",
+                    "on-primary-fixed": "#001c3a",
+                    "outline-variant": "#c3c6d0",
+                    "tertiary-fixed": "#ffddba",
+                    "on-secondary-container": "#614c81",
+                    "primary": "#0e3b69",
+                    "surface-bright": "#f7fafc",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "primary-fixed-dim": "#a5c8ff",
+                    "surface-container-low": "#f1f4f6",
+                    "secondary": "#6a548a",
+                    "on-primary-container": "#a2c6fd",
+                    "tertiary": "#553200",
+                    "on-surface": "#181c1e",
+                    "surface-tint": "#3b6090"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-edge": "40px",
+                    "gutter-md": "24px",
+                    "section-gap": "80px",
+                    "touch-target": "48px",
+                    "sprint-column": "25%"
+            },
+            "fontFamily": {
+                    "headline-md": ["\"Source Serif 4\""],
+                    "display-lg": ["\"Source Serif 4\""],
+                    "headline-lg": ["\"Source Serif 4\""],
+                    "label-caps": ["Atkinson Hyperlegible Next"],
+                    "body-md": ["Atkinson Hyperlegible Next"],
+                    "body-lg": ["Atkinson Hyperlegible Next"],
+                    "headline-lg-mobile": ["\"Source Serif 4\""]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "label-caps": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                    "body-md": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-lg": ["20px", {"lineHeight": "30px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .poster-card {
+            background-color: #ffffff;
+            border: 1px solid #E2E8F0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .poster-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -10px rgba(14, 59, 105, 0.1);
+        }
+        .app-shadow {
+            box-shadow: 0 10px 40px -10px rgba(14, 59, 105, 0.12);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="bg-surface-container-lowest dark:bg-inverse-surface border-b border-outline-variant dark:border-outline sticky top-0 z-50">
+<div class="flex justify-between items-center w-full px-margin-edge py-4 max-w-screen-2xl mx-auto">
+<div class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed">Senior Workout Buddy</div>
+<nav class="hidden md:flex gap-8 items-center">
+<a class="text-primary dark:text-primary-fixed-dim border-b-2 border-primary pb-1 font-bold transition-colors" href="#overview">Overview</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#sprint">Sprint Timeline</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#research">Reflections</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#outcomes">Outcomes</a>
+</nav>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-lg font-label-caps text-label-caps hover:opacity-90 transition-opacity">
+                View Prototype
+            </button>
+</div>
+</header>
+<div class="flex max-w-screen-2xl mx-auto">
+<!-- SideNavBar -->
+<aside class="hidden lg:flex flex-col h-[calc(100vh-80px)] p-6 border-r border-outline-variant bg-surface sticky top-[80px] w-64 shrink-0">
+<div class="mb-10 flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">fitness_center</span>
+</div>
+<div>
+<div class="text-label-caps font-label-caps text-primary leading-tight">Capstone 2024</div>
+<div class="text-body-md text-on-surface-variant text-sm">Senior Health Tech</div>
+</div>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-4 text-primary dark:text-primary-fixed-dim font-bold border-l-4 border-primary pl-4 py-2 transition-all" href="#problem">
+<span class="material-symbols-outlined">assignment</span>
+<span class="text-label-caps font-label-caps">Problem Statement</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant dark:text-surface-variant pl-5 py-2 hover:bg-surface-container transition-all" href="#research">
+<span class="material-symbols-outlined">group</span>
+<span class="text-label-caps font-label-caps">User Research</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant dark:text-surface-variant pl-5 py-2 hover:bg-surface-container transition-all" href="#sprint">
+<span class="material-symbols-outlined">timeline</span>
+<span class="text-label-caps font-label-caps">Design Sprints</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant dark:text-surface-variant pl-5 py-2 hover:bg-surface-container transition-all" href="#outcomes">
+<span class="material-symbols-outlined">star</span>
+<span class="text-label-caps font-label-caps">Final Outcomes</span>
+</a>
+</nav>
+<div class="mt-auto space-y-4">
+<button class="w-full bg-surface-container-low text-primary border border-primary/20 py-3 rounded-lg font-label-caps text-label-caps hover:bg-surface-container-high transition-colors">
+                    Contact Student
+                </button>
+<div class="pt-4 border-t border-outline-variant space-y-2">
+<div class="flex items-center gap-4 text-on-surface-variant pl-5 py-1 text-sm cursor-pointer hover:underline">
+<span class="material-symbols-outlined text-lg">description</span>
+<span>Documentation</span>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant pl-5 py-1 text-sm cursor-pointer hover:underline">
+<span class="material-symbols-outlined text-lg">folder</span>
+<span>Archive</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 min-w-0 p-margin-edge overflow-y-auto">
+<!-- Hero / Overview -->
+<section class="mb-section-gap relative overflow-hidden rounded-xl bg-primary-container p-12 text-on-primary-container" id="overview">
+<div class="absolute top-0 right-0 w-1/3 h-full opacity-10 pointer-events-none">
+
+</div>
+<div class="max-w-2xl relative z-10">
+<span class="inline-block px-3 py-1 bg-tertiary-container text-on-tertiary-container rounded font-label-caps text-label-caps mb-6">CASE STUDY 2024</span>
+<h1 class="font-display-lg text-display-lg mb-4 text-on-primary">Senior Workout Buddy: Empowering Active Aging</h1>
+<p class="font-body-lg text-body-lg opacity-90 leading-relaxed mb-8">
+                        A 4-week design sprint exploring accessible fitness technology for the elderly, bridging the gap between clinical requirements and joyful movement.
+                    </p>
+<div class="flex gap-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="text-label-caps">Sept - Oct 2024</span>
+</div>
+<div class="w-px h-6 bg-white/20"></div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined">person</span>
+<span class="text-label-caps">Lead Researcher: Mary Jensen</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Problem Statement -->
+<section class="mb-section-gap grid grid-cols-1 lg:grid-cols-3 gap-12" id="problem">
+<div class="lg:col-span-2">
+<div class="flex items-center gap-4 mb-6">
+<div class="h-px bg-secondary flex-1"></div>
+<h2 class="font-headline-lg text-headline-lg text-primary uppercase tracking-widest shrink-0">Problem Statement</h2>
+</div>
+<div class="poster-card p-10 rounded-xl">
+<p class="font-headline-md text-headline-md italic mb-6 text-on-surface-variant">
+                            "Many seniors face barriers to consistent physical activity, including complex interfaces and lack of motivation."
+                        </p>
+<p class="font-body-lg text-body-lg leading-relaxed text-on-surface">
+                            Our research found that existing fitness apps are often designed for younger, tech-native demographics. Seniors often struggle with small hit targets, low-contrast text, and a lack of immediate, high-consequence feedback during health events. Our goal was to create a low-friction, high-engagement exercise companion specifically optimized for the 65+ demographic.
+                        </p>
+</div>
+</div>
+<div class="flex flex-col gap-6">
+<div class="poster-card p-8 rounded-xl bg-surface-container-low border-l-4 border-error">
+<span class="material-symbols-outlined text-error mb-2">emergency</span>
+<h3 class="font-label-caps text-label-caps mb-2">CRITICAL NEED</h3>
+<p class="text-sm">Instant access to emergency assistance during workouts was a top safety concern in user interviews.</p>
+</div>
+<div class="poster-card p-8 rounded-xl bg-surface-container-low border-l-4 border-primary">
+<span class="material-symbols-outlined text-primary mb-2">visibility</span>
+<h3 class="font-label-caps text-label-caps mb-2">USABILITY GAP</h3>
+<p class="text-sm">74% of participants reported difficulty reading labels on popular health tracking applications.</p>
+</div>
+</div>
+</section>
+<!-- Visual Baseline: Low-Fi Concepts -->
+<section class="mb-section-gap bg-surface-container rounded-xl p-12 border border-outline-variant" id="research">
+<div class="flex flex-col items-center mb-12">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-2">Visual Baseline</h2>
+<p class="font-body-md text-on-surface-variant text-center max-w-xl">
+                        Initial conceptualization started with high-contrast, oversized touch targets to prioritize cognitive ease and motor-skill accessibility.
+                    </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+<div class="space-y-6">
+<div class="p-4 bg-white rounded-2xl app-shadow transform -rotate-1">
+<img alt="Low-fi wireframe sketches showing oversized buttons for senior accessibility" class="rounded-lg w-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrUvU0iXC_k4zBpwUlp2Lqsk9SxZyXFBdQ_cPFRJyxixEvaB3Q_jo-wyuKzs25sKEirvw4MDVR7XMMvpjhfyvIrrxdq9BYTAPKZu-Y9o_tVsGQEL4ly62UF01Wn5SLbkVBGqpxtkx9edENW4ldkbo7ET_i8UKiV6V--nU0Nx1xMYebYpP11xzCeDVImfOx1x-YDUe17MO5gQoHoRnxv7x-ZGqBXH_gE4VPXYQ3fnKG_LxwtywlNw5N5_zoBNH6os0pQy8kgVUX1liE"/>
+</div>
+<div class="text-center">
+<span class="font-label-caps text-label-caps text-on-surface-variant opacity-70">Iteration 01: Low-Fidelity Wireframe</span>
+</div>
+</div>
+<div class="space-y-6">
+<div class="p-4 bg-white rounded-2xl app-shadow transform rotate-1">
+<img alt="Low-fi colored UI concept for an elderly fitness app with large emergency call and exercise buttons" class="rounded-lg w-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCR8K2tIiI1ZuaVcAoGGFeswaafXarSImM9Rs8-jbbIwdM2m6qUSAMnjTkPcPAzjqL-aIdrCRL0iTgiESGrInbVRT_adbIaCWMFQBEuErmoavwdtkaf8b_dJtEizS7PYIqOCjRrHXKZLYzF_50NGQV9wZIv1ePXvZ8Ssc-NAKlqvxXAFkHabTITrSEKltCNNBagZcl_FTFq4wROJCGIalChwb_UeIvDJ2LDdQk3KrNL9hFHGmIv5H3VmhjqIsxu6WIARZgA0jHL6Tie"/>
+</div>
+<div class="text-center">
+<span class="font-label-caps text-label-caps text-on-surface-variant opacity-70">Iteration 02: High-Contrast Concept</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Sprint Timeline -->
+<section class="mb-section-gap" id="sprint">
+<div class="flex items-center gap-4 mb-10">
+<h2 class="font-headline-lg text-headline-lg text-primary uppercase tracking-widest shrink-0">4-Week Sprint Timeline</h2>
+<div class="h-px bg-outline-variant flex-1"></div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Week 1 -->
+<div class="poster-card p-6 rounded-xl border-t-4 border-primary">
+<div class="flex justify-between items-start mb-4">
+<span class="text-label-caps font-label-caps text-primary">WEEK 01</span>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h4 class="font-headline-md text-headline-md mb-3">Discovery</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">
+                            Literature review on geriatric UI patterns. Stakeholder interviews with occupational therapists.
+                        </p>
+</div>
+<!-- Week 2 -->
+<div class="poster-card p-6 rounded-xl border-t-4 border-primary">
+<div class="flex justify-between items-start mb-4">
+<span class="text-label-caps font-label-caps text-primary">WEEK 02</span>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h4 class="font-headline-md text-headline-md mb-3">Ideation</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">
+                            Rapid wireframing of the "Safe Start" workout flow. Mapping critical touch targets for emergency logic.
+                        </p>
+</div>
+<!-- Week 3 -->
+<div class="poster-card p-6 rounded-xl border-t-4 border-primary-fixed">
+<div class="flex justify-between items-start mb-4">
+<span class="text-label-caps font-label-caps text-primary">WEEK 03</span>
+<span class="material-symbols-outlined text-outline-variant">radio_button_checked</span>
+</div>
+<h4 class="font-headline-md text-headline-md mb-3">Prototyping</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">
+                            Developing interactive Figma prototypes. Integrating audio feedback cues for low-vision users.
+                        </p>
+</div>
+<!-- Week 4 -->
+<div class="poster-card p-6 rounded-xl border-t-4 border-outline-variant opacity-60">
+<div class="flex justify-between items-start mb-4">
+<span class="text-label-caps font-label-caps text-on-surface-variant">WEEK 04</span>
+<span class="material-symbols-outlined text-outline-variant">radio_button_unchecked</span>
+</div>
+<h4 class="font-headline-md text-headline-md mb-3">Testing</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">
+                            Simulated remote testing with senior cohort. Validating task completion rates and cognitive load.
+                        </p>
+</div>
+</div>
+</section>
+<!-- Final Outcomes (Bento Style) -->
+<section class="mb-section-gap" id="outcomes">
+<div class="flex items-center gap-4 mb-10">
+<h2 class="font-headline-lg text-headline-lg text-primary uppercase tracking-widest shrink-0">Final Outcomes</h2>
+<div class="h-px bg-outline-variant flex-1"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-6 grid-rows-2 gap-6 min-h-[600px]">
+<div class="md:col-span-3 md:row-span-2 poster-card p-8 rounded-2xl flex flex-col justify-end bg-gradient-to-br from-white to-surface-container-low overflow-hidden relative">
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover opacity-20" data-alt="A high-fidelity digital mock-up of a senior health app displayed on a modern smartphone. The UI features large, accessible buttons in deep blue and warm gold tones against a soft light-mode background. The setting is a bright, sunlit domestic interior with professional, soft-focus lighting. The overall aesthetic is premium, clean, and compassionate." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDC5n0hxtJGGm8Re5m4FHxANkt33bz1ElAb1-kyF7Rw3_GNnbVyfoQ3cW5ssKJO3Wj7wuUejK-EftR44SVXwia29su0kJDnCDE7KDzd7bUDRH9hdAboJnj_7AccRDBnnRCFtm_3csXbYN5K5eFCZbEUBZsrSVIsKkWCHdPtBKwtbq_h-Zc7IiXr3yRmdb5aywZP-Yw6M2RNOLF9vMUepwEJuWLi7ZQxgEn7_zHF37MiJxnHndX0T433p_j35w-rKXnZADh2EwBrGUIh"/>
+</div>
+<div class="relative z-10">
+<h3 class="font-headline-lg text-headline-lg mb-4 text-primary">The Accessible Core</h3>
+<p class="font-body-md text-body-md mb-6 max-w-sm">
+                                The final UI uses a 48px minimum hit target, high-contrast Material Symbols, and a tonal color system that reduces cognitive strain while maintaining a professional medical aesthetic.
+                            </p>
+<button class="bg-primary text-on-primary px-6 py-3 rounded-xl flex items-center gap-3 w-fit hover:gap-5 transition-all">
+<span class="text-label-caps">EXPLORE SYSTEM</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="md:col-span-3 poster-card p-8 rounded-2xl bg-on-primary-fixed text-primary-fixed relative overflow-hidden">
+<div class="flex justify-between items-start mb-6">
+<span class="material-symbols-outlined text-4xl">favorite</span>
+<span class="font-label-caps text-label-caps text-primary-fixed-dim">HEALTH IMPACT</span>
+</div>
+<h4 class="font-headline-md text-headline-md mb-2">92% Engagement Increase</h4>
+<p class="text-sm opacity-80">During preliminary focus groups, users felt more confident initiating physical activity using the simplified Buddy interface compared to standard health apps.</p>
+</div>
+<div class="md:col-span-3 grid grid-cols-2 gap-6">
+<div class="poster-card p-6 rounded-2xl bg-secondary-container text-on-secondary-container flex flex-col justify-center items-center text-center">
+<span class="font-display-lg text-4xl mb-2">48px</span>
+<span class="font-label-caps text-label-caps">Min Target Size</span>
+</div>
+<div class="poster-card p-6 rounded-2xl bg-tertiary-container text-on-tertiary-container flex flex-col justify-center items-center text-center">
+<span class="font-display-lg text-4xl mb-2">0.0s</span>
+<span class="font-label-caps text-label-caps">Response Lag</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- Footer -->
+<footer class="bg-surface-container-highest dark:bg-on-background border-t border-outline-variant">
+<div class="w-full py-12 px-margin-edge flex flex-col md:flex-row justify-between items-center gap-8 max-w-screen-2xl mx-auto">
+<div class="flex flex-col gap-4">
+<span class="text-label-caps font-label-caps text-primary">SENIOR WORKOUT BUDDY</span>
+<p class="text-sm text-on-surface-variant max-w-xs">
+                    © 2024 Senior Workout Buddy Capstone Project. All rights reserved. University of Health Design.
+                </p>
+</div>
+<div class="flex flex-col md:flex-row gap-8 items-center">
+<nav class="flex gap-6">
+<a class="text-on-surface-variant hover:underline text-label-caps" href="#">Institutional Repository</a>
+<a class="text-on-surface-variant hover:underline text-label-caps" href="#">Research Poster PDF</a>
+<a class="text-on-surface-variant hover:underline text-label-caps" href="#">Privacy Policy</a>
+</nav>
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-sm">share</span>
+</div>
+<div class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-sm">mail</span>
+</div>
+</div>
+</div>
+</div>
+</footer>
+<!-- FAB (Suppressed on research pages per logic, but shown here as it fits the "Buddy" persona theme) -->
+<!-- Determined to suppress as per Shell Logic for Details/Research pages, prioritizing the content canvas. -->
+<script>
+        // Micro-interactions for smooth scrolling navigation and state
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Simple Intersection Observer to highlight active section in SideNav
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.3
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    const sideNavLink = document.querySelector(`aside nav a[href="#${id}"]`);
+                    const topNavLink = document.querySelector(`header nav a[href="#${id}"]`);
+                    
+                    // Reset all side links
+                    document.querySelectorAll('aside nav a').forEach(link => {
+                        link.classList.remove('text-primary', 'dark:text-primary-fixed-dim', 'font-bold', 'border-l-4', 'border-primary', 'pl-4');
+                        link.classList.add('text-on-surface-variant', 'dark:text-surface-variant', 'pl-5');
+                    });
+
+                    if (sideNavLink) {
+                        sideNavLink.classList.remove('text-on-surface-variant', 'dark:text-surface-variant', 'pl-5');
+                        sideNavLink.classList.add('text-primary', 'dark:text-primary-fixed-dim', 'font-bold', 'border-l-4', 'border-primary', 'pl-4');
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => observer.observe(section));
+    </script>
+</body></html>
