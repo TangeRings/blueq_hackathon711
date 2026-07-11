@@ -60,6 +60,20 @@ export interface LearnerPattern {
   avoid: string[];
 }
 
+// A common PBL mistake the mentor watches for. Each signal maps to the coaching
+// strategy the mentor adopts when the student's message reveals that mistake.
+// `detected` flips to true (and the item is flagged red in the UI) only when the
+// conversation actually matches it — nothing is presupposed about the student.
+export interface CoachingSignal {
+  id: string;
+  label: string;
+  strategyName: string;
+  strategyDetail: string;
+  priorOutcome: string;
+  detected: boolean;
+  hasCompletion?: boolean;
+}
+
 export interface StrategyShift {
   previous: { strategy: string; completion: { done: number; total: number } };
   current: { strategy: string; completion: { done: number; total: number } };
@@ -70,8 +84,8 @@ export interface ProjectState {
   week: number;
   weekName: string;
   projectName: string;
-  problemStatement: string;
-  reasoning: string;
+  problemStatement?: string;
+  reasoning?: string;
   actionItems: ActionItem[];
   summary: string;
   milestone: string;
@@ -88,6 +102,7 @@ export interface ProjectState {
   decisionPath: DecisionPathNode[];
   memoryReveal: MemorySource[];
   coachingEvolution: CoachingStep[];
+  coachingSignals?: CoachingSignal[];
   learnerPattern?: LearnerPattern;
   strategyShift?: StrategyShift;
 }

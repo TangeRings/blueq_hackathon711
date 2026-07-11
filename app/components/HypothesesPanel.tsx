@@ -50,6 +50,11 @@ export default function HypothesesPanel({ hypotheses }: HypothesesPanelProps) {
         <span className="text-[11px] text-slate-400 font-mono">{hypotheses.length} formulated</span>
       </div>
 
+      {hypotheses.length === 0 ? (
+        <div className="h-12 rounded-lg border border-dashed border-slate-200 bg-slate-50/50 flex items-center px-3">
+          <span className="text-xs text-slate-400 italic">AI will form hypotheses as you share your idea...</span>
+        </div>
+      ) : (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {hypotheses.map((h, index) => {
           const style = getStatusStyle(h.status);
@@ -78,6 +83,7 @@ export default function HypothesesPanel({ hypotheses }: HypothesesPanelProps) {
           );
         })}
       </div>
+      )}
     </div>
   );
 }

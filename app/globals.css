@@ -28,3 +28,26 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #d4d4d4;
 }
+
+/* Slide-in entrance for coaching strategy cards as they are adopted */
+@keyframes coachSlideIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+.animate-coach-in {
+  animation: coachSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Tile push-in: workspace cards appear when AI fills them */
+@keyframes tilePushIn {
+  from { opacity: 0; transform: translateY(18px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)     scale(1);    }
+}
+.animate-tile-in {
+  animation: tilePushIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.tile-delay-0  { animation-delay: 0ms;   }
+.tile-delay-1  { animation-delay: 80ms;  }
+.tile-delay-2  { animation-delay: 160ms; }
+.tile-delay-3  { animation-delay: 240ms; }
+.tile-delay-4  { animation-delay: 320ms; }

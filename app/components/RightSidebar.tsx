@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from 'react';
-import { Decision, LearningItem, DecisionPathNode, MemorySource, CoachingStep, LearnerPattern } from '../types';
+import { Decision, LearningItem, DecisionPathNode, MemorySource, CoachingStep, CoachingSignal, LearnerPattern } from '../types';
 import CoachingEvolutionPanel from './CoachingEvolutionPanel';
+import CoachingSignalsPanel from './CoachingSignalsPanel';
 import {
   ChevronDown,
   ChevronUp,
@@ -16,6 +17,7 @@ import {
 
 interface RightSidebarProps {
   coachingEvolution: CoachingStep[];
+  coachingSignals?: CoachingSignal[];
   learnerPattern?: LearnerPattern;
   previousDecisions: Decision[];
   learningMemory: LearningItem[];
@@ -26,6 +28,7 @@ interface RightSidebarProps {
 
 export default function RightSidebar({
   coachingEvolution,
+  coachingSignals,
   learnerPattern,
   previousDecisions,
   learningMemory,
@@ -84,14 +87,14 @@ export default function RightSidebar({
           : 'bg-slate-300';
 
   return (
-    <aside className="w-80 border-l border-slate-100 bg-white flex flex-col h-full shrink-0 overflow-y-auto select-none">
+    <aside className="w-80 border-l border-slate-200 bg-white flex flex-col h-full shrink-0 overflow-y-auto select-none">
       {/* Sidebar Header */}
-      <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/20">
+      <div className="px-5 py-4 border-b border-white/8 flex items-center justify-between" style={{ background: '#09090b' }}>
         <div className="flex items-center gap-2">
-          <Brain size={16} className="text-slate-400" />
-          <span className="font-display font-semibold tracking-tight text-slate-900 text-base">Coaching Strategy</span>
+          <Brain size={14} className="text-white/40" />
+          <span className="font-display font-semibold tracking-tight text-white text-sm">Coaching Strategy</span>
         </div>
-        <span className="flex items-center gap-1.5 text-[10px] font-mono text-slate-400 px-1.5 py-0.5 bg-slate-100 rounded">
+        <span className="flex items-center gap-1.5 text-[9px] font-mono text-white/35 px-1.5 py-0.5 bg-white/8 rounded border border-white/10">
           <span className={`w-1.5 h-1.5 rounded-full ${everosDot}`} />
           {everosLabel}
         </span>
@@ -109,6 +112,13 @@ export default function RightSidebar({
           <p className="text-[11px] text-slate-500 leading-relaxed">
             How the mentor learned to teach <span className="font-medium text-slate-700">this</span> student.
           </p>
+
+          {coachingSignals && coachingSignals.length > 0 && (
+            <div className="pb-1">
+              <CoachingSignalsPanel signals={coachingSignals} />
+            </div>
+          )}
+
           <CoachingEvolutionPanel
             coachingEvolution={coachingEvolution}
             learnerPattern={learnerPattern}

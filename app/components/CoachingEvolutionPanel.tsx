@@ -47,13 +47,14 @@ export default function CoachingEvolutionPanel({
           return (
             <div key={`${step.week}-${step.strategyName}`} className="space-y-3">
               <div
-                className={`rounded-xl border p-3.5 shadow-xs transition-colors ${
+                className={`animate-coach-in rounded-xl border p-3.5 shadow-xs transition-colors ${
                   isPromoted
                     ? 'border-emerald-200 bg-emerald-50/40'
                     : isCurrent
-                      ? 'border-slate-300 bg-white ring-1 ring-slate-100'
+                      ? 'border-amber-300 bg-amber-50/60 ring-1 ring-amber-100'
                       : 'border-slate-100 bg-slate-50/30'
                 }`}
+                style={{ animationDelay: `${index * 70}ms` }}
               >
                 <div className="flex items-center justify-between mb-1.5">
                   <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">
@@ -64,16 +65,17 @@ export default function CoachingEvolutionPanel({
                       isPromoted
                         ? 'bg-emerald-100/70 text-emerald-700 border-emerald-200/60'
                         : isCurrent
-                          ? 'bg-slate-900 text-white border-slate-900'
+                          ? 'bg-amber-400 text-amber-950 border-amber-400'
                           : 'bg-slate-100 text-slate-500 border-slate-200'
                     }`}
                   >
-                    {isPromoted ? 'Promoted' : isCurrent ? 'Current' : 'Past'}
+                    {isPromoted ? 'Promoted' : isCurrent ? 'Active' : 'Past'}
                   </span>
                 </div>
 
                 <h5 className="text-xs font-semibold text-slate-800 tracking-tight flex items-center gap-1.5">
                   {isPromoted && <Sparkles size={12} className="text-emerald-500" />}
+                  {isCurrent && <Sparkles size={12} className="text-amber-500" />}
                   {step.strategyName}
                 </h5>
                 <p className="text-[11px] text-slate-500 leading-relaxed mt-1">{step.strategyDetail}</p>

@@ -46,32 +46,7 @@ async function retrieveLearnedCoaching(query: string): Promise<string> {
   }
 }
 
-const JSON_SCHEMA_DESCRIPTION = `
-You MUST respond with a valid JSON object and nothing else. No markdown, no code fences.
-
-Schema:
-{
-  "reply": string,                  // Your mentor response (100-150 words, direct and actionable)
-  "shouldUpdateState": boolean,     // true if project state should change
-  "stateUpdates": {                 // only populated when shouldUpdateState is true
-    "projectName": string,          // identified project title, or omit if already set / not yet clear
-    "problemStatement": string,     // concise problem statement the student is solving, or omit if not yet clear
-    "reasoning": string,            // brief reasoning behind the current direction, or omit if not yet clear
-    "actionItems": [                // full updated action item list, or omit if no change
-      { "id": string, "text": string, "completed": boolean, "source": "ai" }
-    ],
-    "hypotheses": [                 // full updated hypothesis list, or omit if no change
-      { "id": string, "text": string, "status": "Needs validation" | "Partially supported" | "Validated" | "Challenged" | "Active" }
-    ],
-    "decisions": [                  // full updated decision list, or omit if no change
-      { "id": string, "decision": string, "reason": string, "status": "Active" | "Under review" | "Challenged" | "Superseded" }
-    ],
-    "learningItem": {               // new learning to append, or omit if no change
-      "description": string
-    }
-  }
-}
-`;
+// JSON schema is injected at the END of the system prompt so the model reads it last.
 
 export async function POST(req: NextRequest) {
   try {
@@ -101,62 +76,70 @@ export async function POST(req: NextRequest) {
     const teacherFeedbackStr = `"${projectState.teacherFeedback.text}" - ${projectState.teacherFeedback.author}, ${projectState.teacherFeedback.role}`;
 
     const projectTitle = projectState.projectName || '(not yet identified)';
-    const problemStmt = projectState.problemStatement || '(not yet identified)';
-    const reasoning = projectState.reasoning || '(not yet identified)';
     const actionItemsStr = projectState.actionItems?.length
       ? projectState.actionItems.map((a: any) => `- [${a.completed ? 'x' : ' '}] ${a.text}`).join('\n')
       : '(none yet)';
 
-    // Count how many mentor turns have happened so far (excluding the current message)
-    const mentorTurnCount = history.filter((h: any) => h.sender === 'mentor').length;
-    const isEarlyStage = !projectState.projectName && !projectState.problemStatement;
+    const isEarlyStage = !projectState.projectName;
 
-    const systemPrompt = `You are "Project Mentor", a friendly and encouraging mentor for high school students working on real-world project-based learning (PBL) capstone projects. Your tone is warm, casual, and easy to understand — like a cool older sibling or a relatable teacher who gets excited about ideas. Avoid jargon and business buzzwords. Speak plainly, as if talking to a smart 16-year-old.
+    // Student turns so far (used to force commit)
+    const studentTurnCount = history.filter((h: any) => h.sender === 'student').length;
 
-Current Week: Week ${projectState.week} — ${projectState.weekName}
-Milestone: ${projectState.milestone}
+    const systemPrompt = `You are a friendly PBL mentor for high school students. Warm, casual, plain English — like a cool older sibling.
 
-── Current project state ──
-Project Title     : ${projectTitle}
-Problem Statement : ${problemStmt}
-Reasoning         : ${reasoning}
-Action Items      :
-${actionItemsStr}
-Hypotheses        :
-${hypothesesStr || '(none yet)'}
-Previous Decisions:
-${decisionsStr || '(none yet)'}
-Learning Memory   :
-${learningMemoryStr || '(none yet)'}
-Teacher Feedback  : ${teacherFeedbackStr}
+Week ${projectState.week} — ${projectState.weekName}. Milestone: ${projectState.milestone}
+Teacher feedback: ${teacherFeedbackStr}
 
-── How to behave ──
+Current project state:
+- Title: ${projectTitle}
+- Action items: ${actionItemsStr}
+- Hypotheses: ${hypothesesStr || 'none'}
+- Decisions: ${decisionsStr || 'none'}
+- Learning: ${learningMemoryStr || 'none'}
 
-PHASE 1 — DISCOVERY (project title and problem NOT yet confirmed):
-  You are in discovery mode right now if: isEarlyStage = ${isEarlyStage}, mentorTurnCount = ${mentorTurnCount}.
+=== DISCOVERY MODE (title not yet confirmed) ===
+isEarlyStage=${isEarlyStage}, studentTurns=${studentTurnCount}
 
-  Rules while in discovery mode:
-  • Ask ONE focused follow-up question per turn to probe deeper. Never ask more than one question at a time.
-  • The goal is to reach a confident understanding of: (a) what the student is building, (b) who it is for, and (c) what pain they are solving.
-  • You need at least 2 student turns that show real understanding before you commit the project title and problem statement.
-  • Do NOT surface (populate) projectName, problemStatement, or reasoning in stateUpdates until the student has answered at least 2 of your probing questions with enough clarity. If you are still unsure after 2 turns, ask one more question.
-  • When you ARE confident (typically after turn 2 or 3), write a brief confirmation like "Got it — let me capture that." and populate all the fields.
+STRICT RULES for discovery:
+1. Ask ONLY ONE short question per turn (max 40 words). No bullet lists. No advice. No action plans.
+2. After student turn 1: ask who the target user is.
+3. After student turn 2: if you know (a) what they're building and (b) who it's for — COMMIT immediately. Do not ask more questions.
+4. COMMIT means: set shouldUpdateState=true and fill projectName, problemStatement (one clear sentence describing the pain and who has it), actionItems (3 items max), hypotheses (2 items max). The FIRST action item MUST be a research task like "Talk to 5 people who have this problem (not friends)".
+5. If studentTurns >= 3 and isEarlyStage is still true: YOU MUST COMMIT NOW regardless. Use your best guess from the conversation.
 
-PHASE 2 — ONGOING MENTORING (project title and problem already confirmed):
-  • Give practical, real-world advice based on what the student is learning and doing. Reference their hypotheses, decisions, and teacher feedback naturally.
-  • Help them think about what they learned from talking to real people (interviews), what changed, and what to do next.
-  • Suggest concrete next steps when they seem stuck or need direction.
-  • Be concise — 80–130 words max per reply.
+=== DIAGNOSTIC COACHING MODE (title already set) ===
+You assigned action items last week (see "Action items" — unchecked ones are NOT done). When the student reports back, do NOT presuppose what they did. First read their message and figure out which common mistake, if any, they are making. Different mistakes call for different responses:
 
-GENERAL RULES (always apply):
-  • Use simple, everyday language. No business buzzwords or academic jargon (e.g. say "test your idea with real people" instead of "validate your hypothesis").
-  • Use bullet points to structure your reply whenever there are multiple ideas, steps, or observations — keep each bullet tight (1–2 sentences max).
-  • Lead with one short opening sentence to set context, then use bullets for the substance.
-  • No hollow openers like "Great question!" or "Absolutely!".
-  • If the student's message warrants any state change, set shouldUpdateState = true and fill the relevant stateUpdates fields.
-  • Only populate a stateUpdates field if you are genuinely updating it; omit fields that have not changed.
+1. DIDN'T FINISH THE RESEARCH ("I did 2", "only a couple", "ran out of time") -> Press on who they actually reached, what blocked the rest, and a hard deadline to finish.
+2. ONLY TALKED TO FRIENDS/FAMILY -> Friends give biased encouragement. Redirect them to real target users who feel the pain.
+3. JUDGED THE DESIGN, NOT THE PROBLEM ("they said it looks cool") -> Nice-UI feedback isn't validation. Refocus on whether the underlying problem is real.
+4. OPINIONS, NOT BEHAVIOR ("they'd use it", "sounds useful") -> Hypotheticals are weak. Ask what the person actually did the last time they hit this problem.
+5. BUILT BEFORE VALIDATING ("I already coded it") -> Slow the build. Confirm the problem is real and worth solving before writing more code.
 
-${JSON_SCHEMA_DESCRIPTION}`;
+A generic assistant just congratulates the student and moves on. YOU MUST NOT. Name the specific issue you noticed and give the matching push. If they genuinely did solid work (real users, real behavior, honest numbers), acknowledge it and move them forward.
+
+Rules for this mode:
+- Max 70 words. Warm but firm.
+- One clear, pointed follow-up. No long bullet lists.
+- Do not hand out brand-new tasks until the current mistake is addressed.
+
+=== OUTPUT FORMAT — READ THIS LAST ===
+Your response MUST be ONLY a JSON object. No text before or after it. No markdown fences.
+
+{
+  "reply": "<your message to the student, plain conversational text>",
+  "shouldUpdateState": <true or false>,
+  "stateUpdates": {
+    "projectName": "<string, only if committing>",
+    "problemStatement": "<string, only if committing — one sentence: who has it + what the pain is>",
+    "actionItems": [{"id":"a1","text":"<task>","completed":false,"source":"ai"}],
+    "hypotheses": [{"id":"h1","text":"<hypothesis>","status":"Needs validation"}],
+    "decisions": [{"id":"d1","decision":"<decision>","reason":"<why>","status":"Active"}],
+    "learningItem": {"description":"<string>"}
+  }
+}
+
+Only include stateUpdates fields that are actually changing. If shouldUpdateState is false, omit stateUpdates entirely.`;
 
     // Retrieve learned coaching patterns from EverOS (best-effort, non-blocking to the narrative).
     const learnedCoaching = await retrieveLearnedCoaching(message);
@@ -194,8 +177,46 @@ ${JSON_SCHEMA_DESCRIPTION}`;
     }
 
     const aiResult = await aiResponse.json();
-    const content = aiResult.choices?.[0]?.message?.content ?? "{}";
-    const data = JSON.parse(content.trim());
+    const rawContent = (aiResult.choices?.[0]?.message?.content ?? "").trim();
+
+    if (!rawContent) {
+      throw new Error("DeepSeek returned an empty response. Please try again.");
+    }
+
+    // Attempt 1: strip optional markdown fences and parse the whole content.
+    const stripped = rawContent
+      .replace(/^```(?:json)?\s*/i, "")
+      .replace(/\s*```\s*$/, "")
+      .trim();
+
+    let data: Record<string, unknown> | null = null;
+
+    try {
+      data = JSON.parse(stripped);
+    } catch {
+      // Attempt 2: DeepSeek sometimes writes prose first, then appends the JSON
+      // object at the end. Extract the last {...} block and parse that.
+      const jsonMatch = stripped.match(/\{[\s\S]*\}(?=[^}]*$)/);
+      if (jsonMatch) {
+        try {
+          data = JSON.parse(jsonMatch[0]);
+        } catch {
+          // extraction failed — fall through to plain-text fallback
+        }
+      }
+    }
+
+    if (!data) {
+      // Attempt 3: pure plain-text response. Use it directly as the reply so the
+      // chat still works even when DeepSeek ignores the JSON instruction entirely.
+      console.warn("Using plain-text reply:", rawContent.slice(0, 120));
+      data = { reply: rawContent, shouldUpdateState: false };
+    }
+
+    if (!data.reply) {
+      throw new Error("AI response was missing the reply field.");
+    }
+
     return NextResponse.json(data);
   } catch (error: any) {
     console.error("Error in /api/mentor-advice:", error);
